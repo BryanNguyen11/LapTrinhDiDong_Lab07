@@ -11,7 +11,7 @@ function HomeScreen({ navigation }) {
       <Image source={require('./assets/BigLogo.png')} style={styles.notepad} />
       <Text style={styles.title}>MANAGE YOUR TASK</Text>
       <View style={styles.inputContainer}>
-        <Icon name="envelope" size={20} color="grey" style={styles.icon} />
+        {/* <Icon name="envelope" size={20} color="grey" style={styles.icon} /> */}
         <TextInput 
           style={styles.input} 
           placeholder="Enter your name"
