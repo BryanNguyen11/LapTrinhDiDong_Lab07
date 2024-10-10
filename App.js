@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Button, View, Text, Image, TextInput, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Button, View, Text, TextInput, StyleSheet,FlatList, icon } from 'react-native';
 
-// Home screen
+const Stack = createNativeStackNavigator();
+
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/BigLogo.png')} style={styles.notepad} />
       <Text style={styles.title}>MANAGE YOUR TASK</Text>
       <View style={styles.inputContainer}>
-        {/* <Icon name="envelope" size={20} color="grey" style={styles.icon} /> */}
         <TextInput 
           style={styles.input} 
           placeholder="Enter your name"
@@ -20,25 +18,51 @@ function HomeScreen({ navigation }) {
       <Button
         title="GET STARTED"
         onPress={() => navigation.navigate('Tasks')}
-        color="#007AFF" // Màu xanh cho nút
+        color="#007AFF"
       />
     </View>
   );
 }
 
 function Tasks({ navigation }) {
+  const tasks = [
+    { id: '1', text: 'Check email' },
+    { id: '2', text: 'Learn JavaScript basics' },
+    { id: '3', text: 'Learn HTML Advanced' },
+    { id: '4', text: 'Medical App UI' },
+    { id: '5', text: 'Learn Java' },
+  ];
+
+  const renderItem = ({ item }) => (
+    <View style={styles.taskItem}>
+      
+      <Text style={styles.taskText}>{item.text}</Text>
+      
+    </View>
+  );
+
   return (
-    <View>
+    <View style={styles.tasksContainer}>
+      <Text style={styles.greeting}>Hi Twinkle</Text>
+      <Text style={styles.subGreeting}>Have a great day ahead</Text>
+      <TextInput 
+        style={styles.searchBar} 
+        placeholder="Search"
+      />
+      <FlatList
+        data={tasks}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        style={styles.taskList}
+      />
       <Button
-        title="Chat"
-        color='red'
-        onPress={() => navigation.navigate('Home')}
+        title="Add Task"
+        onPress={() => alert('Add Task')}
+        color="#007AFF"
       />
     </View>
   );
 }
-
-const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
@@ -54,7 +78,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#ADD8E6', // Màu nền xanh nhạt
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -62,7 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     marginVertical: 16,
-    color: '#0000FF', // Màu chữ xanh
+    color: '#0000FF',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -74,16 +97,45 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 12,
   },
-  icon: {
-    marginRight: 10,
-  },
   input: {
     flex: 1,
     height: 40,
   },
-  notepad: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
+  tasksContainer: {
+    flex: 1,
+    padding: 20,
+  },
+  greeting: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  subGreeting: {
+    fontSize: 16,
+    color: 'grey',
+  },
+  searchBar: {
+    height: 40,
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+  },
+  taskList: {
+    marginTop: 20,
+  },
+  taskItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+  },
+  taskText: {
+    flex: 1,
+    fontSize: 18,
+  },
+  icon: {
+    marginHorizontal: 10,
   },
 });
